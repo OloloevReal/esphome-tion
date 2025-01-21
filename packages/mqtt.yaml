@@ -2,3 +2,41 @@ substitutions:
   time_platform: sntp
 
 mqtt:
+
+setup:
+  - depends: mqtt as p_mqtt
+    lambda: |-
+      #if ESPHOME_VERSION_CODE < VERSION_CODE(2025, 0, 0)
+      if (App.is_name_add_mac_suffix_enabled()) {
+        const auto app_name = str_sanitize(App.get_name());
+        if (str_startswith(app_name, p_mqtt->get_topic_prefix())) {
+          p_mqtt->set_topic_prefix(app_name);
+        }
+      }
+      #endif
+
+      #ifdef TION_SPRUTHUB_SUPPORT
+      const bool is_spruthub = true;
+      #else
+      const bool is_spruthub = false;
+      #endif
+
+      if (is_spruthub || App.is_name_add_mac_suffix_enabled()) {
+        const auto topic_prefix = p_mqtt->get_topic_prefix();
+        if (p_mqtt->is_log_message_enabled()) {
+          auto log_topic = topic_prefix + "/debug";
+          p_mqtt->set_log_message_template(mqtt::MQTTMessage{
+            .topic = log_topic, .payload = "", .qos = 0, .retain = true
+          });
+        }
+        auto status_topic = topic_prefix + (is_spruthub ? "/tion-status" : "/status");
+        p_mqtt->set_birth_message(mqtt::MQTTMessage{
+          .topic = status_topic, .payload = "online", .qos = 0, .retain = true
+        });
+        p_mqtt->set_last_will(mqtt::MQTTMessage{
+          .topic = status_topic, .payload = "offline", .qos = 0, .retain = true
+        });
+        p_mqtt->set_shutdown_message(mqtt::MQTTMessage{
+          .topic = status_topic, .payload = "offline", .qos = 0, .retain = true
+        });
+      }
