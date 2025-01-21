@@ -222,7 +222,7 @@ tion:
   #   home: { fan_speed: 2, temperature: 16, heater: False }
   #   away: { fan_speed: 1, temperature: 10, heater: False }
   #   sleep: { fan_speed: 1, temperature: 18 }
-{%- if type == "lt" %}
+{%- if type == "lt" and port == "ble" %}
   ## Optional, configure hardware button presets. Factory defaults are: 2/4/6, 10/20/25 °C
   #button_presets:
   #  fan_speed: [1, 3, 5]
@@ -242,7 +242,7 @@ tion:
 climate:
   - platform: tion
     id: tion_climate
-    name: None # use friendly_name
+    name: Climate
     ## Add HEAT_COOL mode to support turn_on without touching current heater mode.
     enable_heat_cool: True
 
@@ -282,7 +282,7 @@ sensor:
     name: Boost Time Left
 
 switch:
-{%- if type != "o2" %}
+{%- if type != "o2" and not(type == "lt" and port == "uart") %}
   ## Buzzer control switch.
   - platform: tion
     id: tion_buzzer
@@ -323,8 +323,9 @@ number:
     initial_value: 20min
     restore_value: true
 
-select:
 {%- if type == "3s" %}
+
+select:
   ## Optional, Air Intake control.
   - platform: tion
     id: tion_air_intake
@@ -338,7 +339,7 @@ binary_sensor:
     id: tion_state_problem
     type: state
     name: State Problem
-{%- if type == "lt" %}
+{%- if type == "lt" and port == "ble" %}
   ## Gate state control.
   - platform: tion
     id: tion_gate_state
@@ -364,8 +365,9 @@ text_sensor:
     type: errors
     name: Errors
 
-button:
 {%- if type != "o2" %}
+
+button:
   ## Reset filter button.
   - platform: tion
     id: tion_reset_filter

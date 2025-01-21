@@ -160,7 +160,7 @@ tion:
 climate:
   - platform: tion
     id: tion_climate
-    name: None # use friendly_name
+    name: Climate
     ## Add HEAT_COOL mode to support turn_on without touching current heater mode.
     enable_heat_cool: True
 

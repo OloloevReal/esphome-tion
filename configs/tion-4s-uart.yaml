@@ -147,7 +147,7 @@ tion:
 climate:
   - platform: tion
     id: tion_climate
-    name: None # use friendly_name
+    name: Climate
     ## Add HEAT_COOL mode to support turn_on without touching current heater mode.
     enable_heat_cool: True
 
@@ -219,8 +219,6 @@ number:
     name: Boost Time
     initial_value: 20min
     restore_value: true
-
-select:
 
 binary_sensor:
   ## Informs about state receiving problem from the breezer.
