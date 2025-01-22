@@ -2,6 +2,7 @@ substitutions:
   time_platform: sntp
 
 mqtt:
+  publish_nan_as_none: true
 
 setup:
   - depends: mqtt as p_mqtt

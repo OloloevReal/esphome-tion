@@ -9,3 +9,4 @@ esphome:
 
 mqtt:
   discovery: false
+  publish_nan_as_none: false
