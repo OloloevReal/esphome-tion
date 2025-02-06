@@ -27,17 +27,16 @@ using namespace dentra::tion::firmware;
 template<typename T, size_t V> struct BleAdvField {
   uint8_t size{sizeof(BleAdvField<T, V>) - 1};
   uint8_t type{V};
-  T data;
+  T data{};
+  BleAdvField() = default;
   BleAdvField(const T data) {
     if constexpr (std::is_array<T>::value) {
-      memcpy(this->data, data, sizeof(T));
+      this->data = 0;  // generates error: use default ctor and memcpy later
+      // memcpy(this->data, data, sizeof(T));
     } else {
       this->data = data;
     }
   }
-  // #ifndef __clang__
-  //   BleAdvField(const char *data) { memcpy(this->data, data, sizeof(T)); }
-  // #endif
 } PACKED;
 
 void Tion4sRC::adv(bool pair) {
@@ -102,6 +101,7 @@ void Tion4sRC::adv(bool pair) {
       }},
       .name{BLE_SERVICE_NAME},
   };
+  memcpy(raw_adv_data.name.data, BLE_SERVICE_NAME, sizeof(BLE_SERVICE_NAME) - 1);
   if (pair) {
     raw_adv_data.flags.data |= ESP_BLE_ADV_FLAG_GEN_DISC;
   }
