@@ -89,7 +89,7 @@ tion:
       constexpr uint8_t ramp_step = 1;
 
       #ifndef USE_ARDUINO
-      auto constrain = [](auto amt, auto low, auto high) => ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
+      auto constrain = [](auto&& amt, auto&& low, auto&& high) { return amt < low ? low : amt > high ? high : amt; };
       #endif
 
       // Если доступна только одна скорость, то только ей и оперируем
