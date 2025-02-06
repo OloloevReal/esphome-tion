@@ -713,7 +713,7 @@ button:
 Пример использования:
 
 ```yaml
-climate:
+button:
   - platform: tion
     type: reset_filter
     name: Reset Filter
