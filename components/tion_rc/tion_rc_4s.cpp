@@ -99,7 +99,7 @@ void Tion4sRC::adv(bool pair) {
           .type = tion_dev_info_t::device_type_t::BR4S,
           .pair = pair,
       }},
-      .name{BLE_SERVICE_NAME},
+      .name{},
   };
   memcpy(raw_adv_data.name.data, BLE_SERVICE_NAME, sizeof(BLE_SERVICE_NAME) - 1);
   if (pair) {

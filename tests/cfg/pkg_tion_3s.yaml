@@ -1,6 +1,4 @@
 packages:
   freeze: !include ../../packages/tion_enable_antifreeze.yaml
   common: !include pkg_common.yaml
-  rc: !include pkg_rc.yaml
-tion_rc:
-  type: 3s
+

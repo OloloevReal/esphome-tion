@@ -6,4 +6,6 @@ substitutions:
 packages:
   tion1: !include ../../configs/tion-3s-ble.yaml
   tion2: !include pkg_tion_3s.yaml
-
+  rc: !include pkg_rc.yaml
+tion_rc:
+  type: 3s
