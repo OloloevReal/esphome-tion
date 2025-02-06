@@ -14,3 +14,4 @@ switch:
           id(tion_ble_vport).set_persistent_connection(false);
           id(tion_ble_client).set_enabled(true);
     entity_category: config
+    restore_mode: RESTORE_DEFAULT_OFF

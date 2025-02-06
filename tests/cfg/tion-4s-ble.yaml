@@ -6,4 +6,5 @@ substitutions:
 packages:
   tion1: !include ../../configs/tion-4s-ble.yaml
   tion2: !include pkg_tion_4s.yaml
+  tion3: !include  ../../packages/persistent.yaml
 
