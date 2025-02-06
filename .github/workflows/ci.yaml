@@ -38,6 +38,7 @@ jobs:
       - name: Generate fake secrets.yaml
         run: |
           echo -e "wifi_ssid: ssid\nwifi_password: password" > tests/cfg/secrets.yaml
+          env
       - name: Build project
         uses: dentra/esphome-action@main
         id: esphome
