@@ -71,7 +71,7 @@ template<class C> class TionSelect : public select::Select, public Component, pu
       return;
     }
     auto *call = this->parent_->make_call();
-    if constexpr (PC::checker().has_api_state_set()) {
+    if constexpr (PC::checker().has_api_state_set("")) {
       C::set(this->parent_, call, value);
     } else {
       C::set(call, value, this->traits.get_options());

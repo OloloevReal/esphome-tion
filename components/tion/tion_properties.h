@@ -28,8 +28,8 @@ template<typename C> class Controller {
     template<typename T> std::false_type test_is_supported(...);
 
     template<typename T>
-    auto test_api_state_set(TionApiComponent *c, TionStateCall *call)
-        -> std::enable_if_t<sizeof(decltype(T::set(c, call, 0)) *) != 0, std::true_type>;
+    auto test_api_state_set(TionApiComponent *c, TionStateCall *call, auto v)
+        -> std::enable_if_t<sizeof(decltype(T::set(c, call, v)) *) != 0, std::true_type>;
     template<typename T> std::false_type test_api_state_set(...);
 
     template<typename T>
@@ -57,7 +57,8 @@ template<typename C> class Controller {
     constexpr bool has_api_state_get() { return decltype(test_api_state_get<C>(TAC))::value; }
     constexpr bool has_api_get() { return decltype(test_api_get<C>(TAC))::value; }
 
-    constexpr bool has_api_state_set() { return decltype(test_api_state_set<C>(TAC, TSC))::value; }
+    constexpr bool has_api_state_set(auto v) { return decltype(test_api_state_set<C>(TAC, TSC, v))::value; }
+    constexpr bool has_api_state_set() { return has_api_state_set(0); }
     constexpr bool has_state_set() { return decltype(test_state_set<C>(TSC))::value; }
     constexpr bool has_api_set() { return !has_state_set() && !has_api_state_set(); }
 
