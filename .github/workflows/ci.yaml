@@ -37,9 +37,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Generate fake secrets.yaml
         run: |
-          echo "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml
-          echo "<<: !include ../secrets.yaml" > configs/secrets.yaml
-          echo "<<: !include ../../secrets.yaml" > tests/cfg/secrets.yaml
+          echo -e "wifi_ssid: ssid\nwifi_password: password" > tests/cfg/secrets.yaml
       - name: Build project
         uses: dentra/esphome-action@main
         id: esphome
@@ -50,7 +48,8 @@ jobs:
             {
               "project_version": "dev",
               "project_name": "${{ matrix.component }}",
-              "project_source": "./components"
+              "project_source": "../../components",
+              "project_branch": "${{ env.GITHUB_REF_NAME }}"
             }
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Show firmware artifacts
