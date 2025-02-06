@@ -1,4 +1,3 @@
 packages:
-  proxy: !include ../../packages/tion_3s_proxy.yaml
   freeze: !include ../../packages/tion_enable_antifreeze.yaml
   common: !include pkg_common.yaml

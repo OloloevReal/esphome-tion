@@ -38,6 +38,10 @@ jobs:
       - name: Generate fake secrets.yaml
         run: |
           echo -e "wifi_ssid: ssid\nwifi_password: password" > tests/cfg/secrets.yaml
+      - name: Register problem matchers
+        run: |
+          echo "::add-matcher::.github/workflows/matchers/clang-tidy.json"
+          echo "::add-matcher::.github/workflows/matchers/gcc.json"
       - name: Build project
         uses: dentra/esphome-action@main
         id: esphome
@@ -46,7 +50,7 @@ jobs:
           config: tests/cfg/${{ matrix.component }}.yaml
           substitutions: |
             {
-              "project_version": "dev",
+              "project_version": "test",
               "project_name": "${{ matrix.component }}",
               "project_source": "../../components",
               "project_branch": "${{ github.ref_name }}"
@@ -54,11 +58,15 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Show firmware artifacts
         run: |
+          env
+          ls -la .
+          ls -la .esphome
+          ls -la .esphome/builds
           ls -l ${{ steps.esphome.outputs.firmware-path }}/firmware.*
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.component }}-dev-${{ github.run_id }}.zip
+          name: ${{ matrix.component }}-test-${{ github.run_id }}.zip
           path: |
             ${{ steps.esphome.outputs.firmware-path }}/firmware.*
             !${{ steps.esphome.outputs.firmware-path }}/firmware.bin
