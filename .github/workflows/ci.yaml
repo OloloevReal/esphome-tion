@@ -12,6 +12,7 @@ env:
   FORCE_COLOR: 1
   ESPHOME_VERSION: "2024.12.4"
   PYTHON_VERSION: "3.12"
+  ESPHOME_DATA_DIR: ".esphome"
 
 jobs:
   build:
