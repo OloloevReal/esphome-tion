@@ -1,0 +1,6 @@
+esp32_ble_server:
+
+packages:
+  temp30: !include ../../packages/tion_temperature30c.yaml
+  common: !include pkg_common.yaml
+  rc: !include pkg_rc.yaml

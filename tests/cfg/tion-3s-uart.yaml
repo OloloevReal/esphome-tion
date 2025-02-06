@@ -1,0 +1,9 @@
+substitutions:
+  node_name: test-3s-uart
+  project_branch: next
+  project_source: ../../components
+
+packages:
+  tion1: !include ../../configs/tion-3s-uart.yaml
+  tion2: !include pkg_tion_3s.yaml
+
