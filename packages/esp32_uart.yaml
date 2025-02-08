@@ -13,7 +13,7 @@ esp32:
 
 logger:
   # Make sure logging is not using the serial port
-  baud_rate: 0
+  # baud_rate: 0
   logs:
     esp-idf: INFO
 
